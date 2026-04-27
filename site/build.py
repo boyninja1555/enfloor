@@ -38,7 +38,7 @@ def create_html_template(words, page_number: int, total_pages: int):
 
 
 def build():
-    conn = sqlite3.connect("../enfloor.db")
+    conn = sqlite3.connect("enfloor.db")
     cursor = conn.cursor()
     cursor.execute("SELECT word, definition, usage, root, type FROM words")
     all_words = cursor.fetchall()

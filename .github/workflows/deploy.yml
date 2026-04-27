@@ -22,7 +22,7 @@ jobs:
           python-version: "3.x"
 
       - name: Generate HTML
-        run: python build_site.py
+        run: python site/build.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
