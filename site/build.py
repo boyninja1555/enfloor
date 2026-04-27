@@ -121,7 +121,7 @@ def build():
     conn.close()
     os.makedirs(f"{OUT_ROOT}/search", exist_ok=True)
 
-    word_to_url = {{}}  # type: ignore
+    word_to_url = {}
     pages = [
         all_words[i : i + WORDS_PER_PAGE]
         for i in range(0, len(all_words), WORDS_PER_PAGE)
