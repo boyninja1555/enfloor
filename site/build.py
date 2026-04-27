@@ -1,10 +1,12 @@
 import os
+import json
 import sqlite3
 
+OUT_ROOT = "dist"
 WORDS_PER_PAGE = 5
 
 
-def create_html_template(words, page_number: int, total_pages: int):
+def html_template(words, page_number: int, total_pages: int):
     items_html = ""
     for word in words:
         items_html += f"""
@@ -30,12 +32,29 @@ def create_html_template(words, page_number: int, total_pages: int):
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <meta name="description" content="Enfloor lexicon, page {page_number}" />
         <title>Enfloor | Page {page_number}</title>
+        <!-- Page Resources -->
     </head>
     <body>
         {items_html}
         <div class="nav">{nav_html}</div>
     </body>
     </html>"""
+
+
+def search_index(pages: list[list]):
+    search_index = []
+    for i, page_words in enumerate(pages, 1):
+        filename = "index.html" if i == 1 else f"p.{i}.html"
+        for word_row in page_words:
+            search_index.append(
+                {
+                    "w": word_row[0],
+                    "u": filename,
+                }
+            )
+
+    with open(f"{OUT_ROOT}/search.json", "w") as f:
+        json.dump(search_index, f)
 
 
 def build():
@@ -50,10 +69,11 @@ def build():
         all_words[i : i + chunk_size] for i in range(0, len(all_words), chunk_size)
     ]
 
+    search_index(pages)
     for i, page_words in enumerate(pages, 1):
-        content = create_html_template(page_words, i, len(pages))
+        content = html_template(page_words, i, len(pages))
         filename = "index.html" if i == 1 else f"p.{i}.html"
-        with open(f"dist/{filename}", "w") as f:
+        with open(f"{OUT_ROOT}/{filename}", "w") as f:
             f.write(content)
 
     conn.close()
