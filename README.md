@@ -4,4 +4,5 @@ I made up words that make American English better. American English only!
 | Directory                          | Description                                    |
 |------------------------------------|------------------------------------------------|
 | [enfloor.db](enfloor.db)           | SQLite3 file containing word definitions, etc. |
+| [site/](site/)                     | Build scripts that generate a static website   |
 | [ai_integration/](ai_integration/) | A supposed AI integration!                     |
