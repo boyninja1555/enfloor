@@ -17,7 +17,8 @@ def create_html_template(words, page_number: int, total_pages: int):
 
     nav_html = ""
     if page_number > 1:
-        nav_html += f'<a href="p.{page_number - 1}.html">Previous</a> '
+        prev_target = "index.html" if page_number == 2 else f"p.{page_number - 1}.html"
+        nav_html += f'<a href="{prev_target}">Previous</a> '
     if page_number < total_pages:
         nav_html += f'<a href="p.{page_number + 1}.html">Next</a>'
 
